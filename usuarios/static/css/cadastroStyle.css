@@ -1,0 +1,12 @@
+.imgSeta{
+    position: absolute;
+    width: 50px;
+    margin-left: 15px;
+    margin-top: 5px;
+    margin-bottom: -50px;
+}
+
+body{
+    background-image: url(../img/background.jpg);
+    background-size: cover;
+}

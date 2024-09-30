@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block titulo %}Login{% endblock %}
+
+{% block conteudo %}
+
+<link rel="stylesheet" href="{% static 'css/cadastroStyle.css' %}">
+
+<section class="mt-5 gradient-custom">
+  <div class="container h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-6 col-md-8 col-lg-6 col-xl-4">
+        <div class="card bg-dark text-white" style="border-radius: 1rem;">
+
+          <a href="/auth/login/" class="mb-4"><img src="{% static 'img/setaaa.png' %}"
+              alt="Seta apontando para a esquerda" class="imgSeta">
+          </a>
+
+          <div class="card-body p-5 text-center">
+
+            <h3 class="fw-bold mb-4 text-uppercase">Encontre sua conta</h1>
+              {% if status == '0' %}
+              <p>Insira sua nova senha:</p>
+              {% else %}
+              <p>Insira seu email já cadastrado para procurar sua conta:</p>
+              {% endif %}
+              <form action="{% url 'alteraSenha' %}" method="post">{% csrf_token %}
+                <div data-mdb-input-init class="form-outline form-white mb-4 mt-4">
+
+                  {% if status == '0' %}
+                  
+                  <input type="password" name="novaSenha" class="form-control form-control-lg mt-4" placeholder="Nova senha" />
+                  <input type="hidden" name="emailEncontrado" value="{{ email }}" />
+                  </a><button data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-light btn-lg px-5 mb-2 mt-4"
+                  type="submit">Alterar Senha</button>
+                  
+                  {% else %}
+                  <input type="email" name="email" class="form-control form-control-lg" placeholder="Email" />
+
+                  <button data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-light btn-lg px-5 mb-2 mt-4"
+                  type="submit">Procurar</button>
+                  {% endif %}
+                </div>
+
+                {% if status == '1' %}
+                  <div class="alert alert-danger mt-4" role="alert">
+                    Esse email não está registrado. <a href="/auth/cadastro/">Registre-se</a>
+                  </div>
+                {% endif %}
+
+                {% if status == '2' %}
+                  <div class="alert alert-danger mt-4" role="alert">
+                    Preencha o campo email.
+                  </div>
+                {% endif %}
+
+                {% if senhaCurta == '0' %}
+                  <div class="alert alert-danger mt-4" role="alert">
+                    Por favor, insira uma senha maior que 6 digitos.
+                  </div>
+                {% endif %}
+              </form>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

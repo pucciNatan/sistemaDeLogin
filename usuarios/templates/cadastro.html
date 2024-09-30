@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block titulo %}Cadastro{% endblock %}
+
+{% block conteudo %}
+
+<link rel="stylesheet" href="{% static 'css/cadastroStyle.css' %}">
+
+<section class="mt-5 gradient-custom">
+  <div class="container h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-6 col-md-8 col-lg-6 col-xl-4">
+        <div class="card bg-dark text-white" style="border-radius: 1rem;">
+
+          <a href="/auth/login/"><img src="{% static 'img/setaaa.png' %}"
+              alt="Seta apontando para a esquerda" class="imgSeta">
+          </a>
+
+          <div class="card-body p-5 text-center">
+
+            <form action="{% url 'validaCadastro' %}" method="post">{% csrf_token %}
+
+              <div class="mb-md-2 pb-2">
+
+                <h2 class="fw-bold mb-4 text-uppercase">Cadastro</h2>
+
+                <div data-mdb-input-init class="form-outline form-white mb-4">
+                  <input type="text" name="nome" class="form-control form-control-lg" placeholder="Nome" />
+                </div>
+
+                <div data-mdb-input-init class="form-outline form-white mb-4">
+                  <input type="email" name="email" class="form-control form-control-lg" placeholder="Email" />
+                </div>
+
+                <div data-mdb-input-init class="form-outline form-white mb-4">
+                  <input type="password" name="senha" class="form-control form-control-lg" placeholder="Senha" />
+                </div>
+
+                <button data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-light btn-lg px-5 mb-3 mt-2"
+                  type="submit">Cadastrar</button>
+
+              </div>
+
+            </form>
+
+            {% if status == '1' %}
+            <div class="alert alert-danger" role="alert">
+              Usuário e senha não podem estar vazios.
+            </div>
+            {% endif %}
+
+            {% if status == '2' %}
+            <div class="alert alert-danger" role="alert">
+              Email já cadastrado.
+            </div>
+            {% endif %}
+
+            {% if status == '3' %}
+            <div class="alert alert-danger" role="alert">
+              Por favor, insira uma senha maior que 6 digitos.
+            </div>
+            {% endif %}
+
+            {% if status == '4' %}
+            <div class="alert alert-danger" role="alert">
+              Erro interno no sistema, tente novamente mais tarde, por favor.
+            </div>
+            {% endif %}
+
+            {% if status == '0' %}
+            <div class="alert alert-success" role="alert">
+              Usuário cadastrado com sucesso!
+            </div>
+            {% endif %}
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}
